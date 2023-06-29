@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django - Video Upload and Display</title>
+</head>
+<style>
+    div{
+    display: inline-block;
+    }
+</style>
+<body>
+    <h1>VIDEO PLAYER</h1>
+    <div style="width: 500px; margin: auto;     ">
+
+        {% if videos %}
+        {% for video in videos %}
+             <h3>{{ video.video_description }}</h3>
+             <video width='400' controls>
+                 <source src="{{ MEDIA_URL }}/{{ video.videofile }}" type='video/mp4'>
+            
+             </video>
+         {% endfor %}
+     
+        {% endif %}
+
+        <fieldset name="Video Upload and Display">
+            {% if msg %}
+                {% autoescape off %}
+                    {{ msg }}
+                {% endautoescape %}
+            {% endif %}
+            <form method="post" action="/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <dl>
+                    <p>
+                        <label>Video Description</label>
+                        <input type="text" name="video_description" autocomplete="off" required>
+                    </p>
+                    <p>
+                        <label>Browse and select a video file</label>
+                        <input type="file" name="video_file" autocomplete="off" required>
+                    </p>
+                </dl>
+                <p>
+                    <input type="submit" value="Upload and Display">
+                </p>
+            </form>
+        </fieldset>
+     
+    </div>
+</body>
+</html>
